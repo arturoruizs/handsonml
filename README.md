@@ -1,2 +1,2 @@
 # handsonml
-Solution of the exercises on the "Hands On Machine Learning with Sci-Kit Lear, Keras &amp; TensorFlow" book by Aurélien Géron
+Solution of the exercises on the "Hands On Machine Learning with Sci-Kit Learn, Keras &amp; TensorFlow" book by Aurélien Géron
