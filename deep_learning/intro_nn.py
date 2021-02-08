@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
@@ -15,6 +16,17 @@ X_valid, X_train = X_train_full[:50000]/255.0 , X_train_full[50000:]/255.0
 y_valid, y_train = y_train_full[:50000] , y_train_full[50000:]
 X_test = X_test/255.0
 
+#Using tensorboard
+root_logdir = os.path.join(os.curdir, 'my_logs')
+
+def get_run_logdir():
+    import time
+    run_id = time.strftime('run_%Y_%m_%d-%H_%M_%S')
+
+    return os.path.join(root_logdir, run_id)
+
+run_logdir = get_run_logdir()
+tensorboard_cb = keras.callbacks.TensorBoard(run_logdir)
 
 #Plot learning curves
 def plt_learning_curves(model_history):
@@ -44,12 +56,13 @@ def simple_sequential():
     history = model.fit(X_train, y_train,
             epochs = 30,
             validation_data = (X_valid, y_valid),
-            callbacks = [checkpoint_cb])
+            callbacks = [checkpoint_cb,tensorboard_cb])
     
     #Plotting learning curves
     plt_learning_curves(history)
 
     return model
+
 
 if __name__ == '__main__':
     
@@ -59,5 +72,4 @@ if __name__ == '__main__':
     print('Evaluating Simple Sequential API model on the test set')
     simple_model.evaluate(X_test,y_test)
  
-
 
